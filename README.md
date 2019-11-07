@@ -51,3 +51,38 @@ Nous demandons à Docker (`docker`) de faire exécuter (`exec`) au container con
 Une fois dans ce terminal, nous pouvons lancer n'importe quelle commande directement. Par exemple `php -v`, qui nous donne le même résultat que précédemment
 
 Pour terminer la session, nous sortons du terminal classiquement, avec `exit`
+
+En PHP, le gestionnaire de dépendances est "composer".
+
+```
+composer
+```
+
+PHPUnit est le framework de test de référence en PHP.
+
+Utilisons `composer` pour télécharger PHPUnit :
+
+```
+composer require PHPUnit/PHPUnit --dev
+```
+
+`require` indique à composer que notre projet a comme dépendance PHPUnit fournie par le vendor PHPUnit
+l’option `--dev` indique à composer que cette dépendance n'est utilisée qu'en mode développement (on ne lance pas les tests en prod…)
+
+On constate que nous avons deux nouveaux fichier dans le répertoire : `composer.json` et `composer.lock``
+
+Le fichier `composer.json` décrit les dépendances de notre projet
+
+Le fichier `composer.lock` est généré à partir du composer.json, il décrit l'intégralité des dépendances à installer (les nôtres, mais aussi les dépendances de nos dépendances, que nous n’avons pas spécifiées dans le composer.json - nous ne les connaissons pas) et leurs versions exactes
+
+Testons que PHPUnit est bien disponible en lançant l'exécutable :
+
+```
+vendor/bin/phpunit
+```
+
+Pour lancer les tests présents dans un répertoire, on spécifie à PHPUnit le répertoire en question comme argument.
+
+```
+vendor/bin/phpunit tests
+```
