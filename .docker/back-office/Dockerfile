@@ -6,7 +6,7 @@ RUN php -r "unlink('composer-setup.php');"
 RUN mv composer.phar /usr/local/bin/composer
 RUN apt-get update
 RUN apt-get install git zip --yes
-RUN docker-php-ext-install pcntl
+RUN docker-php-ext-install pcntl pdo pdo_mysql
 
 ENV BO_DOCUMENT_ROOT /var/www/html/back-office/public
 
