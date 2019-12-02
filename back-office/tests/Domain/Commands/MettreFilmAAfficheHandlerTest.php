@@ -6,6 +6,7 @@ use App\Domain\Commands\MettreFilmAAfficheHandler;
 use App\Domain\Film;
 use App\Domain\ProgrammeDeCinema;
 use PHPUnit\Framework\TestCase;
+
 class MettreFilmAAfficheHandlerTest extends TestCase
 {
     public function test_mettre_un_film_a_affiche_sollicite_le_programme(){
