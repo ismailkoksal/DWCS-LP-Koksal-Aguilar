@@ -1,11 +1,11 @@
 <?php 
 namespace App\Domain\Query;
-use App\Domain\AnnuaireDeFilms;
+use App\Domain\CatalogueDeFilms;
 
 class ListeFilmsHandler {
     private $annuaire;
 
-    public function __construct(AnnuaireDeFilms $annuaire) {
+    public function __construct(CatalogueDeFilms $annuaire) {
         $this->annuaire = $annuaire;
     }
 
