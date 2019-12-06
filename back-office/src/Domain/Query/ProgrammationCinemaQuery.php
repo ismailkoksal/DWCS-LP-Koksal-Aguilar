@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Domain\Query;
-use App\Domain\Cinema;
+use App\Entity\Cinema;
 
 class ProgrammationCinemaQuery {
     private $cinema;

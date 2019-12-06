@@ -3,7 +3,7 @@
 namespace App\Tests\Domain;
 
 use PHPUnit\Framework\TestCase;
-use App\Domain\Cinema;
+use App\Entity\Cinema;
 
 class CinemaTest extends TestCase
 {

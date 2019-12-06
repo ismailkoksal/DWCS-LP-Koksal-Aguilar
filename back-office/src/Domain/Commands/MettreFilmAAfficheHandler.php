@@ -2,8 +2,8 @@
 
 namespace App\Domain\Commands;
 use App\Domain\ProgrammeDeCinema;
-use App\Domain\Film;
-use App\Domain\Cinema;
+use App\Entity\Film;
+use App\Entity\Cinema;
 
 class MettreFilmAAfficheHandler {
     private $programmationCinema;
