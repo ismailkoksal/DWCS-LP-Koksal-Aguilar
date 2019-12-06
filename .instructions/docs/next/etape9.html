@@ -135,7 +135,7 @@ de détail du cinéma :</p>
     $idCinema=<span class="hljs-keyword">$this</span>-&gt;unCinema-&gt;getId();
     $titreFilm=<span class="hljs-keyword">$this</span>-&gt;unFilm-&gt;getTitre();
 
-    $crawler=<span class="hljs-keyword">$this</span>-&gt;client-&gt;request(<span class="hljs-string">'GET'</span>, <span class="hljs-string">'/admin/cinema/'</span>.$idCinema);
+    $crawler=<span class="hljs-keyword">$this</span>-&gt;client-&gt;request(<span class="hljs-string">'GET'</span>, <span class="hljs-string">'/admin/cinemas/'</span>.$idCinema);
 
     <span class="hljs-comment">// Il faut vérifier que la contenu de la page contient le titre du film.</span>
     <span class="hljs-keyword">$this</span>-&gt;assertGreaterThan(
@@ -201,7 +201,7 @@ Elle évite donc la duplication de code.</p>
         $idCinema=<span class="hljs-keyword">$this</span>-&gt;unCinema-&gt;getId();
         $titreFilm=<span class="hljs-keyword">$this</span>-&gt;unFilm-&gt;getTitre();
 
-        $crawler=<span class="hljs-keyword">$this</span>-&gt;client-&gt;request(<span class="hljs-string">'GET'</span>, <span class="hljs-string">'/admin/cinema/'</span>.$idCinema);
+        $crawler=<span class="hljs-keyword">$this</span>-&gt;client-&gt;request(<span class="hljs-string">'GET'</span>, <span class="hljs-string">'/admin/cinemas/'</span>.$idCinema);
 
         <span class="hljs-comment">// Il faut vérifier que la contenu de la page contient le titre du film.</span>
         <span class="hljs-keyword">$this</span>-&gt;assertGreaterThan(
