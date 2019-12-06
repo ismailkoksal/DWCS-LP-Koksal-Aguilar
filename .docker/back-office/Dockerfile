@@ -7,8 +7,13 @@ RUN mv composer.phar /usr/local/bin/composer
 RUN apt-get update
 RUN apt-get install git zip --yes
 RUN docker-php-ext-install pcntl pdo pdo_mysql
+RUN a2enmod rewrite
 
 ENV BO_DOCUMENT_ROOT /var/www/html/back-office/public
+ENV APACHE_LOG_DIR /var/log/apache2
 
-RUN sed -ri -e 's!/var/www/html!${BO_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${BO_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
+ADD vhosts /etc/apache2/sites-available
+
+#RUN sed -ri -e 's!/var/www/html!${BO_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+#RUN sed -ri -e 's!/var/www/!${BO_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
