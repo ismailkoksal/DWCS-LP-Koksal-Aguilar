@@ -16,4 +16,12 @@ class Cinema {
     public function getNom(): string {
         return $this->nom;
     }
+
+    public function getAdresse(): string {
+        return $this->adresse;
+    }
+
+    public function getDescription(): string {
+        return $this->description;
+    }
 }
