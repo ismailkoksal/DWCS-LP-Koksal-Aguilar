@@ -5,12 +5,12 @@ namespace App\Domain;
 class Cinema {
     private $nom;
     private $adresse;
-    private $thirdP;
+    private $description;
 
-    public function __construct(string $nom, string $adresse, string $thirdP) {
+    public function __construct(string $nom, string $adresse, string $description) {
         $this->nom = $nom;
         $this->adresse = $adresse;
-        $this->thirdP = $thirdP;
+        $this->description = $description;
     }
 
     public function getNom(): string {
