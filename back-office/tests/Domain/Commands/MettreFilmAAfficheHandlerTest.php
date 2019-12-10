@@ -1,9 +1,9 @@
 <?php
 namespace App\Tests\Domain\Commands;
-use App\Domain\Cinema;
+use App\Entity\Cinema;
 use App\Domain\Commands\MettreFilmAAfficheCommand;
 use App\Domain\Commands\MettreFilmAAfficheHandler;
-use App\Domain\Film;
+use App\Entity\Film;
 use App\Domain\ProgrammeDeCinema;
 use PHPUnit\Framework\TestCase;
 

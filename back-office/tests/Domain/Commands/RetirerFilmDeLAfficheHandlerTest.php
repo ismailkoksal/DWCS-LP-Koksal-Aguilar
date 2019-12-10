@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Tests\Domain\Commands;
-use App\Domain\Cinema;
+use App\Entity\Cinema;
 use App\Domain\Commands\RetirerFilmDeLAfficheCommand;
 use App\Domain\Commands\RetirerFilmDeLAfficheHandler;
-use App\Domain\Film;
+use App\Entity\Film;
 use App\Domain\ProgrammeDeCinema;
 use PHPUnit\Framework\TestCase;
 

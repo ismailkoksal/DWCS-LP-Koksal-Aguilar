@@ -1,5 +1,5 @@
 <?php 
-namespace App\Domain;
+namespace App\Entity;
 
 class Film {
     private $image;

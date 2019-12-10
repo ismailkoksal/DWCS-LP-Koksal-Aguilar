@@ -1,7 +1,7 @@
 <?php
 namespace App\Domain\Commands;
-use App\Domain\Film;
-use App\Domain\Cinema;
+use App\Entity\Film;
+use App\Entity\Cinema;
 
 class MettreFilmAAfficheCommand {
     private $film;

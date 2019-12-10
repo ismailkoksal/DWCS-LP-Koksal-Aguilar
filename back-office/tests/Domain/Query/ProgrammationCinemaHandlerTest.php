@@ -1,6 +1,6 @@
 <?php
 namespace App\Tests\Domain\Query;
-use App\Domain\Cinema;
+use App\Entity\Cinema;
 use App\Domain\ProgrammeDeCinema;
 use App\Domain\Query\ProgrammationCinemaHandler;
 use App\Domain\Query\ProgrammationCinemaQuery;
