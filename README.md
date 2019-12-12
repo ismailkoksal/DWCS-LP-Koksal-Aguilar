@@ -86,3 +86,24 @@ Pour lancer les tests présents dans un répertoire, on spécifie à PHPUnit le 
 ```
 vendor/bin/phpunit tests
 ```
+
+## Fixtures
+
+Les fixtures nous aident à persister l'information des Cinemas et d'autres objets dans la base de données puisque à chaque fois qu'on detruit le container de notre appli les données aussi.
+
+D'abbord, il faut installer la librairie des Fixtures avec la commande suivante:
+
+```
+composer require --dev orm-fixtures
+```
+
+L'installation a créé un nouveau répertoire /src/DataFixtures, qui contient un exemple de fichier où poser nos fixtures. C'est une bonne occasion de comprendre le fonctionnement de l'ORM.
+
+Pour charger nos fixtures on doit le dire a la console de Symfony, qu'elle doit persister nos données avec la suivante commande:
+
+```
+php bin/console doctrine:fixtures:load
+```
+
+Pourtant, cette commande va effaser notre base de données, pour cela, la console de Symfony nous affiche une confirmation.
+
