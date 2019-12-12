@@ -6,5 +6,5 @@ use App\Entity\Film;
 interface CatalogueDeFilms {
     public function tousLesFilms():iterable;
 
-    public function obtenirUnFilm(string $nomFilm): Film;
+    public function obtenirUnFilm(int $idFilm): Film;
 }

@@ -16,7 +16,8 @@
         "symfony/web-server-bundle": "^4.4",
         "symfony/debug-pack": "^1.0",
         "symfony/maker-bundle": "^1.14",
-        "symfony/phpunit-bridge": "^5.0"
+        "symfony/phpunit-bridge": "^5.0",
+        "doctrine/doctrine-fixtures-bundle": "^3.3"
     },
     "require": {
         "symfony/flex": "^1.5",

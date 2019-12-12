@@ -4,7 +4,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\DoctrineAnnuaireDeCinemas")
+ * @ORM\Entity(repositoryClass="App\Repository\DoctrineAnnuaireDeCinema")
  */
 class Cinema {
     /**
@@ -29,7 +29,7 @@ class Cinema {
      */
     private $adresse;
 
-    public function __construct(string $nom,string $description,string $adresse)
+    public function __construct(string $nom,string $adresse,string $description)
     {
         $this->nom=$nom;
         $this->description=$description;
