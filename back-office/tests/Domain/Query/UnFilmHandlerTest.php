@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class UnFilmHandlerTest extends TestCase {
     public function test_obtenir_un_film() {
-        $requete = new UnFilmQuery("Coco");
+        $requete = new UnFilmQuery(1);
         $catalogue = $this->createMock(CatalogueDeFilms::class);
         $handler = new UnFilmHandler($catalogue);
 

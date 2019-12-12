@@ -1,15 +1,37 @@
 <?php 
 namespace App\Entity;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\DoctrineCatalogueDeFilms")
+ */
 class Film {
-    private $image;
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $titre;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
     private $detail;
 
-    public function __construct(string $image, string $titre, string $detail) {
-        $this->image = $image;
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $image;
+
+    public function __construct(string $titre, string $detail, string $image) {
         $this->titre = $titre;
         $this->detail = $detail;
+        $this->image = $image;
     }
 
     public function getImage(): string {
@@ -21,6 +43,6 @@ class Film {
     }
 
     public function getDetail(): string {
-        return $this->titre;
+        return $this->detail;
     }
 }

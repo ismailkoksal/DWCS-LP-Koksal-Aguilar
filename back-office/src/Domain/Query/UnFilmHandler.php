@@ -11,7 +11,7 @@ class UnFilmHandler {
     }
 
     public function handle(UnFilmQuery $requete): Film {
-        return $this->catalogue->obtenirUnFilm($requete->getNomFilm());
+        return $this->catalogue->obtenirUnFilm($requete->getIdFilm());
     }
 
 }

@@ -10,6 +10,6 @@ class ProgrammationCinemaHandler {
     }
 
     public function handle(ProgrammationCinemaQuery $requete): iterable {
-        return $this->programme->getFilmsPourCinema();
+        return $this->programme->getFilmsPourCinema($requete->getCinema());
     }
 }

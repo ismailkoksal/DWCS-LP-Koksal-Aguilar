@@ -9,4 +9,8 @@ class ProgrammationCinemaQuery {
     public function __construct(Cinema $cinema) {
         $this->cinema = $cinema;
     }
+
+    public function getCinema(): Cinema {
+        return $this->cinema;
+    }
 }

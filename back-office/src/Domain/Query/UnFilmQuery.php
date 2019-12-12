@@ -3,13 +3,13 @@
 namespace App\Domain\Query;
 
 class UnFilmQuery {
-    private $nomFilm;
+    private $idFilm;
 
-    public function __construct(string $nomFilm) {
-        $this->nomFilm = $nomFilm;
+    public function __construct(int $idFilm) {
+        $this->idFilm = $idFilm;
     }
 
-    public function getNomFilm(): string {
-        return $this->nomFilm;
+    public function getIdFilm(): int {
+        return $this->idFilm;
     }
 }
