@@ -58,7 +58,8 @@ class CinemaAdminControllerTest extends WebTestCase
     }
 
     public function test_page_description_film_est_disponible() {
-        $this->client->request('GET', '/admin/films/2');
+        $idFilm = $this->unFilm->getId();
+        $this->client->request('GET', '/admin/films/'.$idFilm);
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 

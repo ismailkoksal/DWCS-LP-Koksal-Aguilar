@@ -34,6 +34,10 @@ class Film {
         $this->image = $image;
     }
 
+    public function getId(): ?int {
+        return $this->id;
+    }
+
     public function getImage(): string {
         return $this->image;
     }
