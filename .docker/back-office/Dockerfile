@@ -5,8 +5,9 @@ RUN php composer-setup.php
 RUN php -r "unlink('composer-setup.php');"
 RUN mv composer.phar /usr/local/bin/composer
 RUN apt-get update
-RUN apt-get install git zip --yes
+RUN apt-get install git zip vim --yes
 RUN docker-php-ext-install pcntl pdo pdo_mysql
+COPY ressources/memory_limit.ini /usr/local/etc/php/conf.d/memory_limit.ini
 RUN a2enmod rewrite
 
 ENV BO_DOCUMENT_ROOT /var/www/html/back-office/public
