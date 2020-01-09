@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Description de Cinema{% endblock %}
+
+{% block body %}
+    <h1>{{cinema.nom}}</h1>
+    <p>{{cinema.description}}</p>
+    <p>{{cinema.adresse}}</p>
+    <br/>
+    <br/>
+    <ul>
+        {% for film in filmsAAffiche %}
+            <li>{{ film.film.titre }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

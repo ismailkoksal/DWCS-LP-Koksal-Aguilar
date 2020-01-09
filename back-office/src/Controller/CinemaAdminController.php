@@ -8,11 +8,14 @@ use App\Domain\Query\ListeCinemasHandler;
 use App\Domain\Query\ListeCinemasQuery;
 use App\Domain\Query\ListeFilmsQuery;
 use App\Domain\Query\ListeFilmsHandler;
+use App\Domain\Query\ProgrammationCinemaHandler;
+use App\Domain\Query\ProgrammationCinemaQuery;
 use App\Domain\Query\UnFilmQuery;
 use App\Domain\Query\UnFilmHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Cinema;
 
 class CinemaAdminController extends AbstractController
 {
@@ -43,5 +46,18 @@ class CinemaAdminController extends AbstractController
         $query = new UnFilmQuery($idFilm);
         $film = $handler->handle($query);
         return $this->render('Film/unFilm.html.twig', ['film' => $film]);
+    }
+
+    /**
+    * @Route("/admin/cinemas/{cinema}", name="detail_cinema")
+    */
+    public function detailCinema(Cinema $cinema, ProgrammationCinemaHandler $programmationCinemaHandler)
+    {
+        $programmeQuery = new ProgrammationCinemaQuery($cinema);
+        $filmsAAffiche = $programmationCinemaHandler->handle($programmeQuery);
+        return $this->render('Cinema/cinema.html.twig',[
+            'cinema'=>$cinema,
+            'filmsAAffiche'=>$filmsAAffiche,
+        ]);
     }
 }
