@@ -2,13 +2,15 @@
 
 namespace App\Controller;
 
-use App\Domain\Cinema;
+use App\Entity\Cinema;
 use App\Domain\Query\ListeCinemasHandler;
 use App\Domain\Query\ListeCinemasQuery;
 use App\Domain\Query\ProgrammationCinemaHandler;
 use App\Domain\Query\ProgrammationCinemaQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -40,7 +42,7 @@ class ApiCinemaAdminController extends AbstractController
      * @Route("api/cinemas/{cinema}", name="api_detail_cinema", methods={"GET"})
      */
     public function detailCinema(
-        \App\Entity\Cinema $cinema,
+        Cinema $cinema,
         ProgrammationCinemaHandler $programmationCinemaHandler,
         SerializerInterface $serializer
     ) {
@@ -50,5 +52,18 @@ class ApiCinemaAdminController extends AbstractController
         $filmsAAfficheJson = $serializer->serialize($filmsAAffiche, 'json');
 
         return new JsonResponse($filmsAAfficheJson, 200, [], true);
+    }
+
+    /**
+     * @Route("api/cinemas", name="api_add_cinema", methods={"POST"})
+    */
+    public function addCinema(Request $request, SerializerInterface $serializer) {
+        $data = $request->getContent();
+        $cinema = $serializer->deserialize($data, Cinema::class, 'json');
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($cinema);
+        $entityManager->flush();
+
+        return new JsonResponse('', Response::HTTP_CREATED, [], true);
     }
 }
