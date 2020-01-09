@@ -6,6 +6,7 @@ use App\Domain\Cinema;
 use App\Domain\Query\ListeCinemasHandler;
 use App\Domain\Query\ListeCinemasQuery;
 use App\Domain\Query\ProgrammationCinemaHandler;
+use App\Domain\Query\ProgrammationCinemaQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,5 +34,21 @@ class ApiCinemaAdminController extends AbstractController
         $listeCinemasJson = $serializer->serialize($listeCinemas, 'json');
 
         return new JsonResponse($listeCinemasJson, 200, [], true);
+    }
+
+    /**
+     * @Route("api/cinemas/{cinema}", name="api_detail_cinema", methods={"GET"})
+     */
+    public function detailCinema(
+        \App\Entity\Cinema $cinema,
+        ProgrammationCinemaHandler $programmationCinemaHandler,
+        SerializerInterface $serializer
+    ) {
+        $programmeQuery = new ProgrammationCinemaQuery($cinema);
+        $filmsAAffiche = $programmationCinemaHandler->handle($programmeQuery);
+
+        $filmsAAfficheJson = $serializer->serialize($filmsAAffiche, 'json');
+
+        return new JsonResponse($filmsAAfficheJson, 200, [], true);
     }
 }
