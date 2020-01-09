@@ -46,13 +46,28 @@ class Cinema {
         return $this->nom;
     }
 
+    public function setNom(?string $nom)
+    {
+        $this->nom = $nom;
+    }
+
     public function getDescription()
     {
         return $this->description;
     }
     
+    public function setDescription(?string $description)
+    {
+        return $this->description = $description;
+    }
+
     public function getAdresse()
     {
         return $this->adresse;
+    }
+
+    public function setAdresse(?string $adresse)
+    {
+        return $this->adresse = $adresse;
     }
 }

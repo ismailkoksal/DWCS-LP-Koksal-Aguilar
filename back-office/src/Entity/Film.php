@@ -42,11 +42,26 @@ class Film {
         return $this->image;
     }
 
+    public function setImage(?string $image) 
+    {
+        $this->image = $image;
+    }
+
     public function getTitre(): string {
         return $this->titre;
     }
 
+    public function setTitre(?string $titre) 
+    {
+        $this->titre = $titre;
+    }
+
     public function getDetail(): string {
         return $this->detail;
+    }
+
+    public function setDetail(?string $detail) 
+    {
+        $this->detail = $detail;
     }
 }
