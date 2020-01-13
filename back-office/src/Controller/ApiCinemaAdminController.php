@@ -39,7 +39,7 @@ class ApiCinemaAdminController extends AbstractController
     }
 
     /**
-     * @Route("api/cinemas/{cinema}", name="api_detail_cinema", methods={"GET"})
+     * @Route("/api/cinemas/{cinema}", name="api_detail_cinema", methods={"GET"})
      */
     public function detailCinema(
         Cinema $cinema,
@@ -55,7 +55,7 @@ class ApiCinemaAdminController extends AbstractController
     }
 
     /**
-     * @Route("api/cinemas", name="api_add_cinema", methods={"POST"})
+     * @Route("/api/cinemas", name="api_add_cinema", methods={"POST"})
     */
     public function addCinema(Request $request, SerializerInterface $serializer) {
         $data = $request->getContent();
@@ -68,7 +68,7 @@ class ApiCinemaAdminController extends AbstractController
     }
 
     /**
-     * @Route("api/cinemas/{cinema}", name="api_update_cinema", methods={"PUT"})
+     * @Route("/api/cinemas/{cinema}", name="api_update_cinema", methods={"PUT"})
      */
     public function updateCinema(
         Cinema $cinema,
@@ -79,6 +79,17 @@ class ApiCinemaAdminController extends AbstractController
         $serializer->deserialize($data, Cinema::class, 'json', ['object_to_populate'=>$cinema]);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($cinema);
+        $entityManager->flush();
+
+        return new JsonResponse('', Response::HTTP_OK, [], true);
+    }
+
+    /**
+     * @Route("/api/cinemas/{cinema}", name="api_delete_cinema", methods={"DELETE"})
+     */
+    public function deleteCinema(Cinema $cinema, Request $request) {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($cinema);
         $entityManager->flush();
 
         return new JsonResponse('', Response::HTTP_OK, [], true);
