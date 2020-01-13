@@ -105,6 +105,9 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
+    "mashape/unirest-php": {
+        "version": "v3.0.4"
+    },
     "monolog/monolog": {
         "version": "2.0.1"
     },
@@ -427,6 +430,9 @@
     "symfony/property-access": {
         "version": "v5.0.1"
     },
+    "symfony/property-info": {
+        "version": "v5.0.2"
+    },
     "symfony/routing": {
         "version": "4.2",
         "recipe": {
@@ -446,6 +452,12 @@
     },
     "symfony/security-csrf": {
         "version": "v5.0.1"
+    },
+    "symfony/serializer": {
+        "version": "v5.0.2"
+    },
+    "symfony/serializer-pack": {
+        "version": "v1.0.2"
     },
     "symfony/service-contracts": {
         "version": "v2.0.1"

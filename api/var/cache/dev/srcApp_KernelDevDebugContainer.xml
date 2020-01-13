@@ -14,6 +14,7 @@
       <parameter key="DoctrineMigrationsBundle">Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle</parameter>
       <parameter key="MakerBundle">Symfony\Bundle\MakerBundle\MakerBundle</parameter>
       <parameter key="SensioFrameworkExtraBundle">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</parameter>
+      <parameter key="DoctrineFixturesBundle">Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle</parameter>
     </parameter>
     <parameter key="kernel.bundles_metadata" type="collection">
       <parameter key="FrameworkBundle" type="collection">
@@ -35,6 +36,10 @@
       <parameter key="SensioFrameworkExtraBundle" type="collection">
         <parameter key="path">/var/www/html/api/vendor/sensio/framework-extra-bundle/src</parameter>
         <parameter key="namespace">Sensio\Bundle\FrameworkExtraBundle</parameter>
+      </parameter>
+      <parameter key="DoctrineFixturesBundle" type="collection">
+        <parameter key="path">/var/www/html/api/vendor/doctrine/doctrine-fixtures-bundle</parameter>
+        <parameter key="namespace">Doctrine\Bundle\FixturesBundle</parameter>
       </parameter>
     </parameter>
     <parameter key="kernel.charset">UTF-8</parameter>
@@ -155,6 +160,60 @@
     <service id="service_container" class="Symfony\Component\DependencyInjection\ContainerInterface" public="true" synthetic="true"/>
     <service id="kernel" class="App\Kernel" public="true" synthetic="true">
       <tag name="routing.route_loader"/>
+    </service>
+    <service id="App\Controller\ApiCinemaAdminController" class="App\Controller\ApiCinemaAdminController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.vdmMuyE.App\Controller\ApiCinemaAdminController"/>
+      </call>
+    </service>
+    <service id="App\Controller\CinemaAdminController" class="App\Controller\CinemaAdminController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.vdmMuyE.App\Controller\CinemaAdminController"/>
+      </call>
+    </service>
+    <service id="App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" autowire="true" autoconfigure="true">
+      <tag name="doctrine.fixture.orm"/>
+    </service>
+    <service id="App\Domain\Cinema" class="App\Domain\Cinema" autowire="true" autoconfigure="true"/>
+    <service id="App\Domain\Commands\MettreFilmAAfficheCommand" class="App\Domain\Commands\MettreFilmAAfficheCommand" autowire="true" autoconfigure="true"/>
+    <service id="App\Domain\Commands\MettreFilmAAfficheHandler" class="App\Domain\Commands\MettreFilmAAfficheHandler" autowire="true" autoconfigure="true">
+      <argument type="service" id="App\Repository\DoctrineProgrammeDeCinemas"/>
+    </service>
+    <service id="App\Domain\Commands\RetirerFilmDeLAfficheCommand" class="App\Domain\Commands\RetirerFilmDeLAfficheCommand" autowire="true" autoconfigure="true"/>
+    <service id="App\Domain\Commands\RetirerFilmDeLAfficheHandler" class="App\Domain\Commands\RetirerFilmDeLAfficheHandler" autowire="true" autoconfigure="true">
+      <argument type="service" id="App\Repository\DoctrineProgrammeDeCinemas"/>
+    </service>
+    <service id="App\Domain\Query\ListeCinemasHandler" class="App\Domain\Query\ListeCinemasHandler" autowire="true" autoconfigure="true">
+      <argument type="service" id="App\Repository\DoctrineAnnuaireDeCinema"/>
+    </service>
+    <service id="App\Domain\Query\ListeCinemasQuery" class="App\Domain\Query\ListeCinemasQuery" autowire="true" autoconfigure="true"/>
+    <service id="App\Domain\Query\ListeFilmsHandler" class="App\Domain\Query\ListeFilmsHandler" autowire="true" autoconfigure="true">
+      <argument type="service" id="App\Repository\DoctrineCatalogueDeFilms"/>
+    </service>
+    <service id="App\Domain\Query\ListeFilmsQuery" class="App\Domain\Query\ListeFilmsQuery" autowire="true" autoconfigure="true"/>
+    <service id="App\Domain\Query\ProgrammationCinemaHandler" class="App\Domain\Query\ProgrammationCinemaHandler" autowire="true" autoconfigure="true">
+      <argument type="service" id="App\Repository\DoctrineProgrammeDeCinemas"/>
+    </service>
+    <service id="App\Domain\Query\ProgrammationCinemaQuery" class="App\Domain\Query\ProgrammationCinemaQuery" autowire="true" autoconfigure="true"/>
+    <service id="App\Domain\Query\UnFilmHandler" class="App\Domain\Query\UnFilmHandler" autowire="true" autoconfigure="true">
+      <argument type="service" id="App\Repository\DoctrineCatalogueDeFilms"/>
+    </service>
+    <service id="App\Domain\Query\UnFilmQuery" class="App\Domain\Query\UnFilmQuery" autowire="true" autoconfigure="true"/>
+    <service id="App\Repository\DoctrineAnnuaireDeCinema" class="App\Repository\DoctrineAnnuaireDeCinema" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="App\Repository\DoctrineCatalogueDeFilms" class="App\Repository\DoctrineCatalogueDeFilms" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="App\Repository\DoctrineProgrammeDeCinemas" class="App\Repository\DoctrineProgrammeDeCinemas" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
     </service>
     <service id=".legacy_controller_name_converter" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser" public="false">
       <tag name="monolog.logger" channel="request"/>
@@ -1530,7 +1589,7 @@
       <factory class="Doctrine\ORM\EntityManager" method="create"/>
     </service>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory" public="false">
-      <argument type="service" id=".service_locator.I3K77mT"/>
+      <argument type="service" id=".service_locator.x6Jko7W"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -1972,6 +2031,39 @@
     <service id="framework_extra_bundle.argument_name_convertor" class="Sensio\Bundle\FrameworkExtraBundle\Request\ArgumentNameConverter" public="false">
       <argument type="service" id="argument_metadata_factory"/>
     </service>
+    <service id="doctrine.fixtures_load_command" class="Doctrine\Bundle\FixturesBundle\Command\LoadDataFixturesDoctrineCommand">
+      <tag name="console.command" command="doctrine:fixtures:load"/>
+      <argument type="service" id="doctrine.fixtures.loader"/>
+      <argument type="service" id="doctrine"/>
+      <call method="setName">
+        <argument>doctrine:fixtures:load</argument>
+      </call>
+    </service>
+    <service id="doctrine.fixtures.loader" class="Doctrine\Bundle\FixturesBundle\Loader\SymfonyFixturesLoader" public="false">
+      <argument type="service" id="service_container"/>
+      <call method="addFixtures">
+        <argument type="collection">
+          <argument type="collection">
+            <argument key="fixture" type="service" id="App\DataFixtures\AppFixtures"/>
+            <argument key="groups" type="collection"/>
+          </argument>
+        </argument>
+      </call>
+    </service>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ApiCinemaAdminController" class="App\Controller\ApiCinemaAdminController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ApiCinemaAdminController" class="App\Controller\ApiCinemaAdminController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\ApiCinemaAdminController" class="App\Controller\ApiCinemaAdminController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\CinemaAdminController" class="App\Controller\CinemaAdminController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\CinemaAdminController" class="App\Controller\CinemaAdminController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\CinemaAdminController" class="App\Controller\CinemaAdminController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\FixturesBundle\ORMFixtureInterface.0.App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\DoctrineAnnuaireDeCinema" class="App\Repository\DoctrineAnnuaireDeCinema" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\DoctrineAnnuaireDeCinema" class="App\Repository\DoctrineAnnuaireDeCinema" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\DoctrineCatalogueDeFilms" class="App\Repository\DoctrineCatalogueDeFilms" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\DoctrineCatalogueDeFilms" class="App\Repository\DoctrineCatalogueDeFilms" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\DoctrineProgrammeDeCinemas" class="App\Repository\DoctrineProgrammeDeCinemas" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\DoctrineProgrammeDeCinemas" class="App\Repository\DoctrineProgrammeDeCinemas" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".service_locator.CmORmuK" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -2155,9 +2247,87 @@
         <argument>make:migration</argument>
       </call>
     </service>
-    <service id=".service_locator.I3K77mT" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.LJM2cn9" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
-      <argument type="collection"/>
+      <argument type="collection">
+        <argument key="handler" type="service" id="App\Domain\Query\ListeCinemasHandler"/>
+        <argument key="serializer" type="service" id="serializer"/>
+      </argument>
+    </service>
+    <service id=".service_locator.BXofTye" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="cinema" type="service" id=".errored..service_locator.BXofTye.App\Entity\Cinema"/>
+        <argument key="programmationCinemaHandler" type="service" id="App\Domain\Query\ProgrammationCinemaHandler"/>
+        <argument key="serializer" type="service" id="serializer"/>
+      </argument>
+    </service>
+    <service id=".service_locator.BuqDmxr" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="serializer" type="service" id="serializer"/>
+      </argument>
+    </service>
+    <service id=".service_locator.qegUlKv" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="cinema" type="service" id=".errored..service_locator.qegUlKv.App\Entity\Cinema"/>
+        <argument key="serializer" type="service" id="serializer"/>
+      </argument>
+    </service>
+    <service id=".service_locator.V1qBQkV" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="cinema" type="service" id=".errored..service_locator.V1qBQkV.App\Entity\Cinema"/>
+      </argument>
+    </service>
+    <service id=".service_locator.1c471Ls" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="handler" type="service" id="App\Domain\Query\ListeCinemasHandler"/>
+      </argument>
+    </service>
+    <service id=".service_locator.kOyX4S3" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="handler" type="service" id="App\Domain\Query\ListeFilmsHandler"/>
+      </argument>
+    </service>
+    <service id=".service_locator.3wW8v1s" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="handler" type="service" id="App\Domain\Query\UnFilmHandler"/>
+      </argument>
+    </service>
+    <service id=".service_locator.p8HJDwl" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="cinema" type="service" id=".errored..service_locator.p8HJDwl.App\Entity\Cinema"/>
+        <argument key="programmationCinemaHandler" type="service" id="App\Domain\Query\ProgrammationCinemaHandler"/>
+      </argument>
+    </service>
+    <service id=".service_locator.ZIol30l" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="App\Controller\ApiCinemaAdminController::addCinema" type="service" id=".service_locator.BuqDmxr"/>
+        <argument key="App\Controller\ApiCinemaAdminController::deleteCinema" type="service" id=".service_locator.V1qBQkV"/>
+        <argument key="App\Controller\ApiCinemaAdminController::detailCinema" type="service" id=".service_locator.BXofTye"/>
+        <argument key="App\Controller\ApiCinemaAdminController::listeCinemas" type="service" id=".service_locator.LJM2cn9"/>
+        <argument key="App\Controller\ApiCinemaAdminController::updateCinema" type="service" id=".service_locator.qegUlKv"/>
+        <argument key="App\Controller\CinemaAdminController::detailCinema" type="service" id=".service_locator.p8HJDwl"/>
+        <argument key="App\Controller\CinemaAdminController::listeCinemas" type="service" id=".service_locator.1c471Ls"/>
+        <argument key="App\Controller\CinemaAdminController::listeFilms" type="service" id=".service_locator.kOyX4S3"/>
+        <argument key="App\Controller\CinemaAdminController::obtenirUnFilm" type="service" id=".service_locator.3wW8v1s"/>
+        <argument key="App\Controller\ApiCinemaAdminController:addCinema" type="service" id=".service_locator.BuqDmxr"/>
+        <argument key="App\Controller\ApiCinemaAdminController:deleteCinema" type="service" id=".service_locator.V1qBQkV"/>
+        <argument key="App\Controller\ApiCinemaAdminController:detailCinema" type="service" id=".service_locator.BXofTye"/>
+        <argument key="App\Controller\ApiCinemaAdminController:listeCinemas" type="service" id=".service_locator.LJM2cn9"/>
+        <argument key="App\Controller\ApiCinemaAdminController:updateCinema" type="service" id=".service_locator.qegUlKv"/>
+        <argument key="App\Controller\CinemaAdminController:detailCinema" type="service" id=".service_locator.p8HJDwl"/>
+        <argument key="App\Controller\CinemaAdminController:listeCinemas" type="service" id=".service_locator.1c471Ls"/>
+        <argument key="App\Controller\CinemaAdminController:listeFilms" type="service" id=".service_locator.kOyX4S3"/>
+        <argument key="App\Controller\CinemaAdminController:obtenirUnFilm" type="service" id=".service_locator.3wW8v1s"/>
+      </argument>
     </service>
     <service id=".service_locator._cmka45" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
@@ -2206,7 +2376,39 @@
         <argument key="doctrine.orm.default_listeners.attach_entity_listeners" type="service" id="doctrine.orm.default_listeners.attach_entity_listeners"/>
       </argument>
     </service>
+    <service id=".service_locator.x6Jko7W" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="App\Repository\DoctrineAnnuaireDeCinema" type="service" id="App\Repository\DoctrineAnnuaireDeCinema"/>
+        <argument key="App\Repository\DoctrineCatalogueDeFilms" type="service" id="App\Repository\DoctrineCatalogueDeFilms"/>
+        <argument key="App\Repository\DoctrineProgrammeDeCinemas" type="service" id="App\Repository\DoctrineProgrammeDeCinemas"/>
+      </argument>
+    </service>
     <service id="logger" class="Symfony\Component\HttpKernel\Log\Logger" public="false"/>
+    <service id=".service_locator.vdmMuyE" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="doctrine" type="service" id="doctrine" on-invalid="ignore"/>
+        <argument key="http_kernel" type="service" id="http_kernel" on-invalid="ignore"/>
+        <argument key="parameter_bag" type="service" id="parameter_bag" on-invalid="ignore"/>
+        <argument key="request_stack" type="service" id="request_stack" on-invalid="ignore"/>
+        <argument key="router" type="service" id="router.default" on-invalid="ignore"/>
+        <argument key="serializer" type="service" id="serializer" on-invalid="ignore"/>
+        <argument key="session" type="service" id="session" on-invalid="ignore"/>
+      </argument>
+    </service>
+    <service id=".service_locator.vdmMuyE.App\Controller\ApiCinemaAdminController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator_context" id="App\Controller\ApiCinemaAdminController"/>
+      <argument>App\Controller\ApiCinemaAdminController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.vdmMuyE" method="withContext"/>
+    </service>
+    <service id=".service_locator.vdmMuyE.App\Controller\CinemaAdminController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator_context" id="App\Controller\CinemaAdminController"/>
+      <argument>App\Controller\CinemaAdminController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.vdmMuyE" method="withContext"/>
+    </service>
     <service id=".service_locator.YrZrpzt" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -2274,15 +2476,19 @@
     <service id="debug.argument_resolver.request.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestValueResolver" public="false"/>
     <service id="debug.argument_resolver.session.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\SessionValueResolver" public="false"/>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator.I3K77mT"/>
+      <argument type="service" id=".service_locator.ZIol30l"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver" public="false">
-      <argument type="service" id=".service_locator.I3K77mT"/>
+      <argument type="service" id=".service_locator.ZIol30l"/>
     </service>
+    <service id=".errored..service_locator.BXofTye.App\Entity\Cinema" class="App\Entity\Cinema"/>
+    <service id=".errored..service_locator.qegUlKv.App\Entity\Cinema" class="App\Entity\Cinema"/>
+    <service id=".errored..service_locator.V1qBQkV.App\Entity\Cinema" class="App\Entity\Cinema"/>
+    <service id=".errored..service_locator.p8HJDwl.App\Entity\Cinema" class="App\Entity\Cinema"/>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
-      <argument type="service" id=".service_locator.waDm5zW"/>
+      <argument type="service" id=".service_locator.bscfkw5"/>
       <argument type="collection">
         <argument key="about">console.command.about</argument>
         <argument key="assets:install">console.command.assets_install</argument>
@@ -2336,6 +2542,7 @@
         <argument key="doctrine:migrations:status">doctrine_migrations.status_command</argument>
         <argument key="doctrine:migrations:up-to-date">doctrine_migrations.up_to_date_command</argument>
         <argument key="doctrine:migrations:version">doctrine_migrations.version_command</argument>
+        <argument key="doctrine:fixtures:load">doctrine.fixtures_load_command</argument>
         <argument key="make:auth">maker.auto_command.make_auth</argument>
         <argument key="make:command">maker.auto_command.make_command</argument>
         <argument key="make:controller">maker.auto_command.make_controller</argument>
@@ -2356,7 +2563,7 @@
         <argument key="make:migration">maker.auto_command.make_migration</argument>
       </argument>
     </service>
-    <service id=".service_locator.waDm5zW" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.bscfkw5" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="console.command.about" type="service" id="console.command.about"/>
@@ -2392,6 +2599,7 @@
         <argument key="doctrine.database_drop_command" type="service" id="doctrine.database_drop_command"/>
         <argument key="doctrine.database_import_command" type="service" id="doctrine.database_import_command"/>
         <argument key="doctrine.ensure_production_settings_command" type="service" id="doctrine.ensure_production_settings_command"/>
+        <argument key="doctrine.fixtures_load_command" type="service" id="doctrine.fixtures_load_command"/>
         <argument key="doctrine.mapping_convert_command" type="service" id="doctrine.mapping_convert_command"/>
         <argument key="doctrine.mapping_import_command" type="service" id="doctrine.mapping_import_command"/>
         <argument key="doctrine.mapping_info_command" type="service" id="doctrine.mapping_info_command"/>
@@ -2433,6 +2641,9 @@
     </service>
     <service id="Psr\Container\ContainerInterface" alias="service_container" public="false"/>
     <service id="Symfony\Component\DependencyInjection\ContainerInterface" alias="service_container" public="false"/>
+    <service id="App\Domain\AnnuaireDeCinemas" alias="App\Repository\DoctrineAnnuaireDeCinema" public="false"/>
+    <service id="App\Domain\CatalogueDeFilms" alias="App\Repository\DoctrineCatalogueDeFilms" public="false"/>
+    <service id="App\Domain\ProgrammeDeCinema" alias="App\Repository\DoctrineProgrammeDeCinemas" public="false"/>
     <service id="controller_name_converter" alias=".legacy_controller_name_converter" public="false">
       <deprecated>The "%alias_id%" service is deprecated since Symfony 4.3.</deprecated>
     </service>
@@ -2509,7 +2720,7 @@
     <service id="doctrine.orm.default_query_cache" alias="doctrine.orm.cache.provider.cache.doctrine.orm.default.query" public="false"/>
     <service id="doctrine.orm.default_entity_manager.event_manager" alias="doctrine.dbal.default_connection.event_manager" public="false"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.CmORmuK" public="true"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.I3K77mT"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.ZIol30l"/>
     <service id="Psr\Log\LoggerInterface" alias="logger" public="false"/>
     <service id="event_dispatcher" alias="debug.event_dispatcher" public="true"/>
     <service id="controller_resolver" alias="debug.controller_resolver" public="false"/>
