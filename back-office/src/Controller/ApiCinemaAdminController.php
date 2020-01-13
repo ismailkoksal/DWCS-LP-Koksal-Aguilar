@@ -66,4 +66,21 @@ class ApiCinemaAdminController extends AbstractController
 
         return new JsonResponse('', Response::HTTP_CREATED, [], true);
     }
+
+    /**
+     * @Route("api/cinemas/{cinema}", name="api_update_cinema", methods={"PUT"})
+     */
+    public function updateCinema(
+        Cinema $cinema,
+        Request $request,
+        SerializerInterface $serializer
+    ) {
+        $data = $request->getContent();
+        $serializer->deserialize($data, Cinema::class, 'json', ['object_to_populate'=>$cinema]);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($cinema);
+        $entityManager->flush();
+
+        return new JsonResponse('', Response::HTTP_OK, [], true);
+    }
 }
