@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Édition cinéma{% endblock %}
+
+{% block body %}
+    <h1>{{ cinema.nom }}</h1>
+    
+    <p>Modification de la programmation</p>
+    {{ form(form, {'attr': {'class': 'programmation'}}) }}
+
+{% endblock %}

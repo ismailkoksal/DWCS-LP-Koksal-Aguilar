@@ -64,4 +64,9 @@ class Film {
     {
         $this->detail = $detail;
     }
+
+    public function __toString()
+    {
+        return 'Id: '. $this->id .' Titre: '. $this->titre;
+    }
 }

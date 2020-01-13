@@ -5,7 +5,10 @@ namespace App\Tests\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Domain\ProgrammeDeCinema;
 use App\Entity\Cinema;
+use App\Domain\Commands\DefinirProgrammationCinemaCommand;
+use App\Domain\Commands\DefinirProgrammationCinemaHandler;
 
 class CinemaAdminControllerTest extends WebTestCase
 {
@@ -82,5 +85,37 @@ class CinemaAdminControllerTest extends WebTestCase
             0,
             $crawler->filter('html:contains("'.$titreFilm.'")')->count()
         );
+    }
+
+    public function test_page_edition_programmation_est_disponible()
+    {
+        $idCinema=$this->unCinema->getId();
+        $crawler=$this->client->request('GET', '/admin/cinemas/programmation/'.$idCinema);
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function test_page_edition_programmation_est_disponible_et_affiche_le_formulaire()
+    {
+        $idCinema=$this->unCinema->getId();
+        $crawler=$this->client->request('GET', '/admin/cinemas/programmation/'.$idCinema);
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('form.programmation')->count()
+        );
+    }
+
+    public function test_definir_la_programmation_vide_les_films_a_l’affiche(){
+        // Arrange
+        $cinema=$this->createMock(Cinema::class);
+        $programmeDeCinema = $this->createMock(ProgrammeDeCinema::class);
+        $handler=new DefinirProgrammationCinemaHandler($programmeDeCinema);
+        $command=new DefinirProgrammationCinemaCommand([],$cinema);
+    
+        // Assert
+        $programmeDeCinema->expects($this->once())->method("videProgrammation")->with($cinema);
+    
+        // Act
+        $handler->handle($command);
     }
 }

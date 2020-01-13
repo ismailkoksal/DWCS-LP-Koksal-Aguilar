@@ -9,4 +9,6 @@ interface ProgrammeDeCinema {
     public function mettreFilmAAffiche(Film $film, Cinema $cinema): bool;
 
     public function retirerFilmDeLAffiche(Film $film, Cinema $cinema): bool;
+
+    public function videProgrammation(Cinema $cinema);
 }

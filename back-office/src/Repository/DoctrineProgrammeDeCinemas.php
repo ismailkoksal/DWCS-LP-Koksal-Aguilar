@@ -2,12 +2,12 @@
 
 namespace App\Repository;
 
+use App\Domain\ProgrammeDeCinema;
+use App\Entity\Film;
+use App\Entity\Cinema;
 use App\Entity\FilmAAffiche;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use App\Domain\ProgrammeDeCinema;
-use App\Entity\Cinema;
-use App\Entity\Film;
 
 /**
  * @method FilmAAffiche|null find($id, $lockMode = null, $lockVersion = null)
@@ -48,6 +48,14 @@ class DoctrineProgrammeDeCinemas extends ServiceEntityRepository implements Prog
         return true;
     }
 
+    public function videProgrammation(Cinema $cinema) 
+    {
+        $connection = $this->managerRegistry->getManagerForClass(FilmAAffiche::class)->getConnection();
+        $sql = 'DELETE FROM film_aaffiche WHERE film_aaffiche.cinema_id = :cinema';
+        $stmt = $connection->prepare($sql);
+        $stmt->execute(['cinema' => $cinema->getId()]);
+    }
+    
     // /**
     //  * @return FilmAAffiche[] Returns an array of FilmAAffiche objects
     //  */
