@@ -7,7 +7,7 @@ use App\Domain\Query\ListeCinemasHandler;
 use App\Domain\Query\ListeCinemasQuery;
 use App\Domain\Query\ProgrammationCinemaHandler;
 use App\Domain\Query\ProgrammationCinemaQuery;
-use FOS\RestBundle\View\View;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,16 +28,14 @@ class ApiCinemaAdminController extends AbstractController
     }
 
     /**
-     * @Route("/api/cinemas", name="api_cinemas", methods={"GET"})
+     * @Rest\View()
+     * @Rest\Get("/api/cinemas", name="api_cinemas")
      */
     public function listeCinemas(ListeCinemasHandler $handler) {
         $query = new ListeCinemasQuery();
         $listeCinemas = $handler->handle($query);
 
-        $view = View::create($listeCinemas);
-        $view->setFormat('json');
-
-        return $view;
+        return $listeCinemas;
     }
 
     /**
@@ -58,7 +56,7 @@ class ApiCinemaAdminController extends AbstractController
 
     /**
      * @Route("/api/cinemas", name="api_add_cinema", methods={"POST"})
-    */
+     */
     public function addCinema(Request $request, SerializerInterface $serializer) {
         $data = $request->getContent();
         $cinema = $serializer->deserialize($data, Cinema::class, 'json');
