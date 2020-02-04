@@ -7,6 +7,7 @@ use App\Domain\Query\ListeCinemasHandler;
 use App\Domain\Query\ListeCinemasQuery;
 use App\Domain\Query\ProgrammationCinemaHandler;
 use App\Domain\Query\ProgrammationCinemaQuery;
+use FOS\RestBundle\View\View;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -35,7 +36,10 @@ class ApiCinemaAdminController extends AbstractController
 
         $listeCinemasJson = $serializer->serialize($listeCinemas, 'json');
 
-        return new JsonResponse($listeCinemasJson, 200, [], true);
+        $view = View::create($listeCinemasJson);
+        $view->setFormat('json');
+
+        return $view;
     }
 
     /**
