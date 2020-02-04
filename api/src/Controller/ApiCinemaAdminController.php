@@ -30,13 +30,11 @@ class ApiCinemaAdminController extends AbstractController
     /**
      * @Route("/api/cinemas", name="api_cinemas", methods={"GET"})
      */
-    public function listeCinemas(ListeCinemasHandler $handler, SerializerInterface $serializer) {
+    public function listeCinemas(ListeCinemasHandler $handler) {
         $query = new ListeCinemasQuery();
         $listeCinemas = $handler->handle($query);
 
-        $listeCinemasJson = $serializer->serialize($listeCinemas, 'json');
-
-        $view = View::create($listeCinemasJson);
+        $view = View::create($listeCinemas);
         $view->setFormat('json');
 
         return $view;
