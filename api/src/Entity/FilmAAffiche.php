@@ -3,9 +3,17 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DoctrineProgrammeDeCinemas")
+ * @UniqueEntity(
+ *  fields={"cinema","film"},
+ *  errorPath="film",
+ *  message="Film already presents in listFilmsAAFiche for this cinema."
+ * )
  */
 class FilmAAffiche
 {
@@ -18,11 +26,14 @@ class FilmAAffiche
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Cinema")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $cinema;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Film")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Film", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups("filmsAAFiche")
      */
     private $film;
 

@@ -1,6 +1,8 @@
 <?php 
 namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DoctrineCatalogueDeFilms")
@@ -10,21 +12,25 @@ class Film {
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("filmsAAFiche")
      */
     private $id;
     
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("filmsAAFiche")
      */
     private $titre;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups("filmsAAFiche")
      */
     private $detail;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups("filmsAAFiche")
      */
     private $image;
 

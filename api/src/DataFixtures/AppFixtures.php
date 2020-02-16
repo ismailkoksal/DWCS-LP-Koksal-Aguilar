@@ -15,10 +15,12 @@ class AppFixtures extends Fixture
         // $manager->persist($product);
         $cgr = new Cinema('MegaCGR',"12, rue des fleurs","Cinema a l'anciene");
         $interstelar = new Film("Interstelar", "oirept,prz,t,r", "");
-        $affiche = new FilmAAffiche($cgr, $interstelar); 
+        $toyStory = new Film("Toy Story", "It is the story of Andy's toys", "");
+        $affiche = new FilmAAffiche($cgr, $interstelar);
 
         $manager->persist($cgr);
         $manager->persist($interstelar);
+        $manager->persist($toyStory);
         $manager->persist($affiche);
         $manager->flush();
     }
