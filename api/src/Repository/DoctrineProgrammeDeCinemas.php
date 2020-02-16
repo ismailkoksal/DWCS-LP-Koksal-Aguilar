@@ -27,7 +27,15 @@ class DoctrineProgrammeDeCinemas extends ServiceEntityRepository implements Prog
 
     public function getFilmsPourCinema(Cinema $cinema): iterable
     {
-        return $this->findBy(["cinema" => $cinema]);
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT fa, f
+            FROM App\Entity\FilmAAffiche fa
+            JOIN fa.film f
+            WHERE fa.cinema = :cinema'
+        )->setParameter('cinema', $cinema);
+        return $query->getArrayResult();
     }
 
     public function mettreFilmAAffiche(Film $film, Cinema $cinema): bool
@@ -42,7 +50,7 @@ class DoctrineProgrammeDeCinemas extends ServiceEntityRepository implements Prog
     public function retirerFilmDeLAffiche(Film $film, Cinema $cinema): bool
     {
         $filmAAffiche = new FilmAAffiche($cinema, $film);
-        $manager = $this->managerRegistry->getManagerForClass(get_class($filmAAffiche));
+        $manager = $this->managerRegistry->getManagerForClass(FilmAAffiche::class);
         $manager->remove($filmAAffiche);
         $manager->flush();
         return true;
