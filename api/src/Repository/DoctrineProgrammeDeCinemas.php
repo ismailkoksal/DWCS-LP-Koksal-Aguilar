@@ -8,6 +8,8 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use App\Domain\ProgrammeDeCinema;
 use App\Entity\Cinema;
 use App\Entity\Film;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 
 /**
  * @method FilmAAffiche|null find($id, $lockMode = null, $lockVersion = null)
@@ -41,19 +43,27 @@ class DoctrineProgrammeDeCinemas extends ServiceEntityRepository implements Prog
     public function mettreFilmAAffiche(Film $film, Cinema $cinema): bool
     {
         $filmAAffiche = new FilmAAffiche($cinema, $film);
-        $manager = $this->managerRegistry->getManagerForClass(get_class($filmAAffiche));
-        $manager->persist($filmAAffiche);
-        $manager->flush();
-        return true;
+        $manager = $this->getEntityManager();
+        try {
+            $manager->persist($filmAAffiche);
+            $manager->flush();
+            return true;
+        } catch (ORMException $e) {
+            return false;
+        }
     }
 
     public function retirerFilmDeLAffiche(Film $film, Cinema $cinema): bool
     {
         $afficheRequired = $this->findBy(['cinema' => $cinema, 'film' => $film]);
-        $manager = $this->managerRegistry->getManagerForClass(FilmAAffiche::class);
-        $manager->remove($afficheRequired[0]);
-        $manager->flush();
-        return true;
+        $manager = $this->getEntityManager();
+        try {
+          $manager->remove($afficheRequired[0]);
+          $manager->flush();
+          return true;
+        } catch (ORMException $e) {
+            return false;
+        }
     }
 
     // /**

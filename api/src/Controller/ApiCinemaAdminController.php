@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use FOS\RestBundle\View\View;
 
 class ApiCinemaAdminController extends AbstractController
 {
@@ -25,17 +27,22 @@ class ApiCinemaAdminController extends AbstractController
     }
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View()
      * @Rest\Post("/api/cinemas")
      */
-    public function addCinema(Request $request, SerializerInterface $serializer) 
+    public function addCinema(Request $request, SerializerInterface $serializer, ValidatorInterface $validator) 
     {
         $data = $request->getContent();
         $cinema = $serializer->deserialize($data, Cinema::class, 'json');
+
+        $errors = $validator->validate($cinema);
+        if (count($errors))
+            return View::create($errors, Response::HTTP_BAD_REQUEST);
+
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($cinema);
         $entityManager->flush();
-        return $cinema;
+        return View::create(["message" => "Cinema created"], Response::HTTP_CREATED);
     }
 
     /**
@@ -45,5 +52,17 @@ class ApiCinemaAdminController extends AbstractController
     public function getCinema(int $id, AnnuaireDeCinemas $annuaire) {
         $cinema = $annuaire->obtenirCinemaParId($id);
         return $cinema;
+    }
+
+    /**
+     * @Rest\View()
+     * @Rest\Delete("/api/cinemas/{id}")
+     */
+    public function deleteCinema(int $id, AnnuaireDeCinemas $annuaire)
+    {
+        if ($annuaire->supprimerCinemaParId($id)) {
+            return View::create(["messafe" => "Cinema deleted"], Response::HTTP_OK);
+        }
+        return View::create(["message" => "Cinema with id ".$id." doesn't exist"], Response::HTTP_BAD_REQUEST);
     }
 }
