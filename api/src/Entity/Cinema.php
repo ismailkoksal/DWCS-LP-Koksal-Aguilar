@@ -2,9 +2,15 @@
 
 namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DoctrineAnnuaireDeCinema")
+ * @Assert\UniqueEntity(
+ *   fields={"nom","adresse"},
+ *   errorPath={["nom", "adresse"]},
+ *   message="This cinema is already created."
+ * )
  */
 class Cinema {
     /**
@@ -16,6 +22,11 @@ class Cinema {
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Type(
+     *   type="string",
+     *   message="The value {{value}} is not a valid {{type}}."
+     * )
      */
     private $nom;
 
@@ -26,6 +37,7 @@ class Cinema {
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\NotBlank
      */
     private $adresse;
 

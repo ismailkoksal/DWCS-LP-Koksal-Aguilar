@@ -17,4 +17,9 @@ class DoctrineAnnuaireDeCinema extends ServiceEntityRepository implements Annuai
     {
         return $this->findAll();
     }
+
+    public function obtenirCinemaParId(int $id): Cinema
+    {
+        return $this->find($id);
+    }
 }
