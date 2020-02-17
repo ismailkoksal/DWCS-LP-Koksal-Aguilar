@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Cinema;
 use App\Domain\Query\ListeCinemasHandler;
 use App\Domain\Query\ListeCinemasQuery;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -18,5 +19,13 @@ class ApiCinemaAdminController extends AbstractController
         $listeCinemas = $handler->handle($query);
 
         return $listeCinemas;
+    }
+
+    /**
+     * @Rest\View()
+     * @Rest\Get("/api/cinemas/{id}")
+     */
+    public function getCinema(Cinema $cinema) {
+        return $cinema;
     }
 }

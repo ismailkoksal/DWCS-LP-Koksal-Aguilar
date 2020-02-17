@@ -49,9 +49,9 @@ class DoctrineProgrammeDeCinemas extends ServiceEntityRepository implements Prog
 
     public function retirerFilmDeLAffiche(Film $film, Cinema $cinema): bool
     {
-        $filmAAffiche = new FilmAAffiche($cinema, $film);
+        $afficheRequired = $this->findBy(['cinema' => $cinema, 'film' => $film]);
         $manager = $this->managerRegistry->getManagerForClass(FilmAAffiche::class);
-        $manager->remove($filmAAffiche);
+        $manager->remove($afficheRequired[0]);
         $manager->flush();
         return true;
     }
