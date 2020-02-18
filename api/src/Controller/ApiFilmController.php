@@ -44,7 +44,7 @@ class ApiFilmController extends AbstractController
      * @Rest\View()
      * @Rest\Post("/api/films")
      */
-    public function addFilm(Request $request, SerializerInterface $serializer, ValidatorInterface $validator)
+    public function addFilm(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, ListeFilmsHandler $handler)
     {
         $data = $request->getContent();
         $film = $serializer->deserialize($data,Film::class, 'json');
@@ -53,9 +53,7 @@ class ApiFilmController extends AbstractController
         if (count($errors))
             return View::create($errors, Response::HTTP_BAD_REQUEST);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($film);
-        $entityManager->flush();
+        $handler->addFilm($film);
         return View::create(["message" => "Film created."], Response::HTTP_OK);
     }
 }

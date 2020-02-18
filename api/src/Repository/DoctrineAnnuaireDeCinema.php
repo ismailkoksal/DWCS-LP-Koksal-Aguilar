@@ -40,4 +40,11 @@ class DoctrineAnnuaireDeCinema extends ServiceEntityRepository implements Annuai
             return false;
         }
     }
+
+    public function creerCinema(Cinema $cinema)
+    {
+        $manager = $this->registry->getManagerForClass(Cinema::class);
+        $manager->persist($cinema);
+        $manager->flush();
+    }
 }

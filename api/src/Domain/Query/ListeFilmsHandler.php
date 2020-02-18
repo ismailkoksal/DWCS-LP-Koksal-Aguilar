@@ -1,6 +1,7 @@
 <?php 
 namespace App\Domain\Query;
 use App\Domain\CatalogueDeFilms;
+use App\Entity\Film;
 
 class ListeFilmsHandler {
     private $annuaire;
@@ -11,5 +12,9 @@ class ListeFilmsHandler {
 
     public function handle(ListeFilmsQuery $requete): iterable {
         return $this->annuaire->tousLesFilms();
+    }
+
+    public function addFilm(Film $film) {
+        $this->annuaire->ajouterFilm($film);
     }
 }

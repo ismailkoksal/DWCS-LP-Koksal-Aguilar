@@ -14,4 +14,19 @@ class ListeCinemasHandler {
     {
         return $this->annuaire->tousLesCinemas();
     }
+
+    public function createCinema(Cinema $cinema)
+    {
+        $this->annuaireDeCinemas->creerCinema($cinema);
+    }
+
+    public function getCinemaById(int $id): Cinema 
+    {
+        return $this->annuaireDeCinemas->obtenirCinemaParId($id);
+    }
+
+    public function deleteCinema(int $id): bool
+    {
+        return $this->annuaireDeCinemas->supprimerCinemaParId($id);
+    }
 }

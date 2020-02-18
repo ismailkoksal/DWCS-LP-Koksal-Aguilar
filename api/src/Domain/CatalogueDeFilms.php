@@ -7,4 +7,7 @@ interface CatalogueDeFilms {
     public function tousLesFilms():iterable;
 
     public function obtenirUnFilm(int $idFilm): Film;
+
+    public function ajouterFilm(Film $film): bool;
+
 }

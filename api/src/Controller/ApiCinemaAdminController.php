@@ -30,7 +30,7 @@ class ApiCinemaAdminController extends AbstractController
      * @Rest\View()
      * @Rest\Post("/api/cinemas")
      */
-    public function addCinema(Request $request, SerializerInterface $serializer, ValidatorInterface $validator) 
+    public function addCinema(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, ListeCinemasHandler $handler) 
     {
         $data = $request->getContent();
         $cinema = $serializer->deserialize($data, Cinema::class, 'json');
@@ -39,9 +39,7 @@ class ApiCinemaAdminController extends AbstractController
         if (count($errors))
             return View::create($errors, Response::HTTP_BAD_REQUEST);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($cinema);
-        $entityManager->flush();
+        $handler->createCinema($cinema);
         return View::create(["message" => "Cinema created"], Response::HTTP_CREATED);
     }
 
@@ -49,18 +47,17 @@ class ApiCinemaAdminController extends AbstractController
      * @Rest\View()
      * @Rest\Get("/api/cinemas/{id}")
      */
-    public function getCinema(int $id, AnnuaireDeCinemas $annuaire) {
-        $cinema = $annuaire->obtenirCinemaParId($id);
-        return $cinema;
+    public function getCinema(int $id, ListeCinemasHandler $handler) {
+        return $handler->getCinemaById($id);
     }
 
     /**
      * @Rest\View()
      * @Rest\Delete("/api/cinemas/{id}")
      */
-    public function deleteCinema(int $id, AnnuaireDeCinemas $annuaire)
+    public function deleteCinema(int $id, ListeCinemasHandler $handler)
     {
-        if ($annuaire->supprimerCinemaParId($id)) {
+        if ($handler->deleteCinema($id)) {
             return View::create(["messafe" => "Cinema deleted"], Response::HTTP_OK);
         }
         return View::create(["message" => "Cinema with id ".$id." doesn't exist"], Response::HTTP_BAD_REQUEST);
